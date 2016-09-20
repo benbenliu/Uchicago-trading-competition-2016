@@ -1,0 +1,55 @@
+
+
+
+
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?> 
+<jnlp spec="1.5+" codebase="http://64.74.102.112:12600/optionscity/optionscity/onramp" xmlns:jfx="http://javafx.com">
+	<information>
+		<title>OnRamp 64.74.102.112:12600</title>
+		<vendor>OptionsCity Software Inc.</vendor>
+		<homepage href="http://64.74.102.112:12600/optionscity/optionscity/"/>
+		<description>OnRamp 64.74.102.112:12600</description>
+		<icon kind="default" href="onRamp.png"/>
+		<icon kind="splash" href="onRamp.png"/>
+		<information os="Windows">
+			<icon kind="shortcut" href="onRamp.ico"/>
+			<icon kind="selected" href="onRamp.ico"/>
+			<icon kind="disabled" href="onRamp.ico"/>
+			<icon kind="rollover" href="onRamp.ico"/>
+		</information>
+		<information os="Linux">
+			<icon kind="shortcut" href="onRamp.ico"/>
+			<icon kind="selected" href="onRamp.ico"/>
+			<icon kind="disabled" href="onRamp.ico"/>
+			<icon kind="rollover" href="onRamp.ico"/>
+		</information>
+		<information os="Mac">
+			<icon kind="shortcut" href="onRamp.icns"/>
+			<icon kind="selected" href="onRamp.icns"/>
+			<icon kind="disabled" href="onRamp.icns"/>
+			<icon kind="rollover" href="onRamp.icns"/>
+		</information>
+		<shortcut online="true" install="true">
+			<desktop/>
+			<menu submenu="OptionsCity OnRamp"/>
+		</shortcut>
+	</information>
+    <update check="always" policy="always" />
+	<security>
+		<all-permissions/>
+	</security>
+	<resources>
+		<j2se version="1.7+" initial-heap-size="{MEMORY_SIZE}" max-heap-size="{MEMORY_SIZE}"  java-vm-args="-XX:+UseConcMarkSweepGC -Dsun.java2d.noddraw=true -Dsun.java2d.opengl=false -Dsun.java2d.d3d=false -Duser.timezone=America/Chicago {VM_ARGS_USER}"/>
+        <jfx:javafx-runtime version="2.1+"/>
+        <jar href="launcher.jar" />
+    </resources>
+	<application-desc main-class="com.optionscity.launcher.Launcher">
+        <argument>com.optionscity.freeway.onramp.OnRampMain</argument>
+        <argument>profile=globals</argument>
+    </application-desc>
+</jnlp>
+

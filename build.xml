@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="optionscity_bundle" default="all">
+    <property name="TEAM_NAME" value="ILL1"/>
+
+    <macrodef name="compile">
+        <attribute name="case"/>
+        <sequential>
+            <javac fork="true" srcdir="${basedir}/cases/@{case}/src" destdir="${basedir}/cases/@{case}/bin"
+                   includeantruntime="false" target="1.7" source="1.7">
+                <compilerarg value="-Xlint:all"/>
+                <classpath>
+                    <pathelement path="${basedir}/cases/common/bin"/>
+                    <fileset dir="${basedir}/lib" includes="**/*.jar"/>
+                </classpath>
+            </javac>
+        </sequential>
+    </macrodef>
+
+    <target name="all" depends="package_bundle"/>
+
+    <target name="init">
+        <delete dir="${basedir}/cases/1/bin"/>
+        <delete dir="${basedir}/cases/2/bin"/>
+        <delete dir="${basedir}/cases/3/bin"/>
+        <delete dir="${basedir}/cases/common/bin"/>
+        <delete dir="${basedir}/artifacts"/>
+
+        <mkdir dir="${basedir}/cases/1/bin"/>
+        <mkdir dir="${basedir}/cases/2/bin"/>
+        <mkdir dir="${basedir}/cases/3/bin"/>
+        <mkdir dir="${basedir}/cases/common/bin"/>
+        <mkdir dir="${basedir}/cases/common/src"/>
+        <mkdir dir="${basedir}/artifacts"/>
+    </target>
+
+    <target name="compile_all" depends="init">
+        <javac nowarn="on" fork="false" srcdir="${basedir}/cases/common/src" destdir="${basedir}/cases/common/bin"
+               includeantruntime="false" target="1.7" source="1.7">
+            <compilerarg value="-Xlint:all"/>
+            <classpath>
+                <fileset dir="${basedir}/lib" includes="**/*.jar"/>
+            </classpath>
+        </javac>
+
+        <compile case="1"/>
+        <compile case="2"/>
+        <compile case="3"/>
+    </target>
+
+    <target name="package_bundle" depends="compile_all">
+        <jar destfile="${basedir}/artifacts/common.${TEAM_NAME}.jar">
+            <fileset dir="${basedir}/cases/common/bin" includes="**/*.class"/>
+        </jar>
+
+        <jar destfile="${basedir}/artifacts/job.${TEAM_NAME}.jar">
+            <fileset dir="${basedir}/cases/1/bin" includes="**/*.class" excludes="${TEAM_NAME}Case1Job.class"/>
+            <fileset dir="${basedir}/cases/2/bin" includes="**/*.class" excludes="${TEAM_NAME}Case2Job.class"/>
+            <fileset dir="${basedir}/cases/3/bin" includes="**/*.class" excludes="${TEAM_NAME}Case3Job.class"/>
+        </jar>
+
+        <jar destfile="${basedir}/artifacts/bundle.${TEAM_NAME}.jar">
+            <fileset dir="${basedir}/artifacts/" includes="*.jar"/>
+            <fileset file="${basedir}/cases/1/src/${TEAM_NAME}Case1Job.java"/>
+            <fileset file="${basedir}/cases/2/src/${TEAM_NAME}Case2Job.java"/>
+            <fileset file="${basedir}/cases/3/src/${TEAM_NAME}Case3Job.java"/>
+        </jar>
+
+        <delete file="${basedir}/artifacts/common.${TEAM_NAME}.jar"/>
+        <delete file="${basedir}/artifacts/job.${TEAM_NAME}.jar"/>
+    </target>
+</project>
